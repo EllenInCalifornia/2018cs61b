@@ -14,6 +14,7 @@ public class Planet {
     * as a ‘static final’ variable in your class, */
    public static final double G = 6.67e-11; 
 
+   /**a constructor - __init__*/
    public Planet(double xP, double yP, double xV, double yV, double m, String img) {
     xxPos = xP;
     yyPos = yP;
@@ -99,6 +100,11 @@ public class Planet {
     xxPos += dt * xxVel;
     yyPos += dt *yyVel;
 
+    }
+
+    //non-static method 
+    public void draw() {
+        StdDraw.picture(xxPos, yyPos,imgFileName);
     }
 
    }
