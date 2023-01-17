@@ -11,8 +11,9 @@ public class Planet {
    public double mass;
    public String imgFileName;
    /**good practice to declare any constants 
-    * as a ‘static final’ variable in your class, */
-   public static final double G = 6.67e-11; 
+    * as a ‘static final’ variable in your class,
+    but I don't understand why it should be made public */
+   private static final double G = 6.67e-11; 
 
    /**a constructor - __init__*/
    public Planet(double xP, double yP, double xV, double yV, double m, String img) {
@@ -104,7 +105,7 @@ public class Planet {
 
     //non-static method 
     public void draw() {
-        StdDraw.picture(xxPos, yyPos,imgFileName);
+        StdDraw.picture(xxPos, yyPos,"images/" + imgFileName);
     }
 
    }

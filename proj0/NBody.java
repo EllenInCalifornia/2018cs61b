@@ -24,7 +24,7 @@ public class NBody {
             double m = in.readDouble();
 
             //the picture is in a sub-directory ***********
-            String img = "images/" + in.readString();
+            String img = in.readString();
 
             // no planet was created before this
             planets[i] = new Planet(xP,yP,xV,yV,m,img);
