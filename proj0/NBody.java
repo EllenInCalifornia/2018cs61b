@@ -52,46 +52,48 @@ public class NBody {
         StdDraw.setYscale(-r, r);
 
         //set starfield to the background
-        StdDraw.picture(0, 0, "images/starfield.jpg");
+        //StdDraw.picture(0, 0, "images/starfield.jpg");
 
         // draw all planets
-        for(Planet p : planets) {
-            p.draw();
-        }
+        // for(Planet p : planets) {
+        //     p.draw();
+        // }
 
 
         StdDraw.enableDoubleBuffering();
 
         // a time variable 
         double t = 0.0;
+        int num = planets.length;
 
         while(t <= T ){
-            double[] xForces = new double[planets.length];
-            for(int i =0; i < planets.length; i++) {
+            double[] xForces = new double[num];
+            double[] yForces = new double[num]; 
+            for(int i =0; i < num; i++) {
                 xForces[i] = planets[i].calcNetForceExertedByX(planets);
-
-            }
-            double[] yForces = new double[planets.length]; 
-
-            for(int i =0; i < planets.length; i++) {
                 yForces[i] = planets[i].calcNetForceExertedByY(planets);
 
             }
-
-            for(Planet p : planets) {
-                p.update(dt, r, t);
-            }
             
+
+
+            for(int i = 0; i  < num; i++) {
+                planets[i].update(dt,xForces[i] , yForces[i]);
+            }
             //set starfield to the background
-        StdDraw.picture(0, 0, "images/starfield.jpg");
-        // draw all planets
-        for(Planet p : planets) {
-            p.draw();
-        }
-        StdDraw.show();
-        //pause(int t) Pauses for t milliseconds.
-        StdDraw.pause(10);
-        t += dt;
+            StdDraw.picture(0, 0, "images/starfield.jpg");
+            
+            // draw all planets
+            for(Planet p : planets) {
+                p.draw();
+            }
+            StdDraw.show();
+            //pause(int t) Pauses for t milliseconds.
+            StdDraw.pause(10);
+            t += dt;
+        
+
+        
 
         }
 
