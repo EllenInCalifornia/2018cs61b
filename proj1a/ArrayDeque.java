@@ -34,8 +34,8 @@ public class ArrayDeque<T> {
     }
 
 
-     //should R be instance variable or method ？
-    private double usageRatio (int s, int l) {
+     // style( 前不能有空格
+    private double usageRatio(int s, int l) {
         R = (double) s / l;
         if (l >= 16 && R < 0.25) {
             this.shrink();
@@ -45,11 +45,12 @@ public class ArrayDeque<T> {
 
     private void shrink() {
         T[] newItems = (T[]) new Object[length / 2];
-        int ptr1 = ArrayDeque.plusOne(p1,length);
+        //，后面必须有空格
+        int ptr1 = ArrayDeque.plusOne(p1, length);
         int ptr2 = 0;
         while (ptr2 < size) {
             newItems[ptr2] = items[ptr1];
-            ptr1 = ArrayDeque.plusOne(ptr1,length);
+            ptr1 = ArrayDeque.plusOne(ptr1, length);
             ptr2++;
         }
         items = newItems;
@@ -63,12 +64,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        int index = ArrayDeque.plusOne(p1,length);
+        int index = ArrayDeque.plusOne(p1, length);
         T ans = items[index];
         p1 = index;
         items[p1] = null;
         size--;
-        R = this.usageRatio(size,length);
+        R = this.usageRatio(size, length);
         return ans;
     }
 
@@ -76,12 +77,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        int index = ArrayDeque.minusOne(p2,length);
+        int index = ArrayDeque.minusOne(p2, length);
         T ans = items[index];
         p2 = index;
         items[p2] = null;
         size--;
-        R = this.usageRatio(size,length);
+        R = this.usageRatio(size, length);
         return ans;
     }
 
@@ -102,11 +103,11 @@ public class ArrayDeque<T> {
 
     private void grow() {
         T[] newItems = (T[]) new Object[length * 2];
-        int ptr1 = ArrayDeque.plusOne(p1,length);
+        int ptr1 = ArrayDeque.plusOne(p1, length);
         int ptr2 = 0;
         while (ptr2 < size) {
             newItems[ptr2] = items[ptr1];
-            ptr1 = ArrayDeque.plusOne(ptr1,length);
+            ptr1 = ArrayDeque.plusOne(ptr1, length);
             ptr2++;
         }
         items = newItems;
@@ -129,7 +130,7 @@ public class ArrayDeque<T> {
             grow();
         }
         items[p2] = item;
-        p2 = ArrayDeque.plusOne(p2,length);
+        p2 = ArrayDeque.plusOne(p2, length);
         size++;
     }
 
