@@ -168,21 +168,7 @@ public class ArrayDeque<T> {
         }
     }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> Test = new ArrayDeque<>();
-
-        for (int i = 0; i < 30; i++) {
-            Test.addFirst(i);
-        }
-        for (int j = 0; j < 30; j++) {
-            Test.removeFirst();
-        }
-
-        for (int i = 0; i < 30; i++) {
-            Test.addFirst(i);
-        }
-        int i = Test.get(0);
-    }
 
 
+    
 }
