@@ -1,99 +1,135 @@
 public class ArrayDeque<T> {
-    /**invariant front + 1 = index of first item;
-     * last - 1 = index of last item;
-     * when size = length,
-     * front + 1 = last && items[front] = lastitem;
-     * items[last] = firstitem;
-     * addfirst (front-1); addlast (last+1);
-     *
-     */
-    private T[] items;
     private int size;
-    private int front;
-    private int last;
-    private double R;
     private int length;
+    private T[] items;
+    private int p1;
+    private int p2;
+    private double R;
 
+    /*invariants
+    1. p1 + 1 = index of first item;
+    2. p2 - 1 = index of last item;
+    3. addfirst p1 -1, special case:
+      if p1 == 0, p1 = length - 1;
+    4. addlast p2 + 1, special case:
+     if p2 == length - 1, p2 == 0; */
+    // 超出的重归于零 - modulus
+    /*
+    plus: p2 % length
+    5. removeFirst p1 + 1
+    6. removeLast p2 - 1
+    7. resize: different design
+    1) initial: p1 + 1 = p2,  when size = length,
+     p1 + 1 = p2
+     */
+    // add： when size = length , grow;
+    // remove: when R < 0.25 && length >= 16, shrink;
     public ArrayDeque() {
         items = (T[]) new Object[8];
-        front = 3;
-        last = 4;
         size = 0;
         length = items.length;
         R = 0.0;
-    }
-    private void updateR() {
-        R = ((double) size) / length;
-        while (length >= 16 && R < 0.25) {
-            memoryManage();
-        }
+        p1 = 3;
+        p2 = 4;
     }
 
 
-    private void reSize() {
-        T[] newItems = (T[]) new Object[length * 2];
-        System.arraycopy(items, 0, newItems,
-                0, front + 1);
-        if (front + 1 < length) {
-            System.arraycopy(items, front + 1, newItems,
-                    length + last, length - last);
-            front = length + last - 1;
-        } else {
-            last = front + 1;
-            front = length * 2 - 1;
+     //should R be instance variable or method ？
+    private double usageRatio (int s, int l) {
+        R = (double) s / l;
+        if (l >= 16 && R < 0.25) {
+            this.shrink();
         }
+        return R;
+    }
 
+    private void shrink() {
+        T[] newItems = (T[]) new Object[length / 2];
+        int ptr1 = ArrayDeque.plusOne(p1,length);
+        int ptr2 = 0;
+        while (ptr2 < size) {
+            newItems[ptr2] = items[ptr1];
+            ptr1 = ArrayDeque.plusOne(ptr1,length);
+            ptr2++;
+        }
         items = newItems;
-        length = items.length;
-        this.updateR();
+        length /= 2;
+        p1 = ArrayDeque.minusOne(0, length);
+        p2 = size;
+
     }
 
-    private void memoryManage() {
-        T[] smallItems = (T[]) new Object[length / 2];
-        if (front < last) {
-            System.arraycopy(items, front, smallItems,
-                    smallItems.length / 4, size + 1);
-            items = smallItems;
-            length = items.length;
-            front = length / 4;
-            last = front + size + 1;
-        } else {
-            System.arraycopy(items, 0, smallItems,
-                    0, last);
-            System.arraycopy(items, front + 1, smallItems,
-                    front + 1 - length / 2, length - front - 1);
-            items = smallItems;
-            length = items.length;
-            front -= length;
+    public T removeFirst() {
+        if (size == 0) {
+            return null;
         }
-
-        this.updateR();
+        int index = ArrayDeque.plusOne(p1,length);
+        T ans = items[index];
+        p1 = index;
+        items[p1] = null;
+        size--;
+        R = this.usageRatio(size,length);
+        return ans;
     }
 
-    public void addFirst(T i) {
+    public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
+        int index = ArrayDeque.minusOne(p2,length);
+        T ans = items[index];
+        p2 = index;
+        items[p2] = null;
+        size--;
+        R = this.usageRatio(size,length);
+        return ans;
+    }
+
+    private static int plusOne(int p, int modulo) {
+        p++;
+        p %= modulo;
+        return p;
+    }
+
+    private static int minusOne(int p, int l) {
+        if (p == 0) {
+            p = l - 1;
+        } else {
+            p--;
+        }
+        return p;
+    }
+
+    private void grow() {
+        T[] newItems = (T[]) new Object[length * 2];
+        int ptr1 = ArrayDeque.plusOne(p1,length);
+        int ptr2 = 0;
+        while (ptr2 < size) {
+            newItems[ptr2] = items[ptr1];
+            ptr1 = ArrayDeque.plusOne(ptr1,length);
+            ptr2++;
+        }
+        items = newItems;
+        length *= 2;
+        p1 = ArrayDeque.minusOne(0, length);
+        p2 = size;
+    }
+
+    public void addFirst(T item) {
         if (size == length) {
-            reSize();
+            grow();
         }
-        items[front] = i;
-        if (front  == 0) {
-            front = length - 1;
-        } else {
-            front--;
-        }
+        items[p1] = item;
+        p1 = ArrayDeque.minusOne(p1, length);
         size++;
-
     }
 
     public void addLast(T item) {
         if (size == length) {
-            reSize();
+            grow();
         }
-        items[last] = item;
-        if (last == length - 1) {
-            last = 0;
-        } else {
-            last++;
-        }
+        items[p2] = item;
+        p2 = ArrayDeque.plusOne(p2,length);
         size++;
     }
 
@@ -106,69 +142,60 @@ public class ArrayDeque<T> {
 
     public int size() {
         return size;
-
     }
 
     public void printDeque() {
-        int counter = 0;
-        int j = front;
-        while (counter < size) {
-            if (j == length - 1) {
-                j = -1;
-            }
-            System.out.print(items[j + 1] + " ");
-            j++;
-            counter++;
+        int i = 0;
+        int j = p1;
+        while (i < size) {
+            j = ArrayDeque.plusOne(j, length);
+            System.out.print(items[j] + " ");
+            i++;
         }
-
-    }
-
-    public T removeFirst() {
-        T ans;
-        if (size == 0) {
-            return null;
-        }
-        if (front == length - 1) {
-            ans = items[0];
-            front = 0;
-        } else {
-            ans = items[front + 1];
-            front++;
-        }
-        items[front] = null;
-        size--;
-        this.updateR();
-        return ans;
-    }
-
-    public T removeLast() {
-        if (size == 0) {
-            return null;
-        }
-        T lastitem;
-        if (last == 0) {
-            lastitem = items[length - 1];
-            last = length - 1;
-        } else {
-            lastitem = items[last - 1];
-            last--;
-        }
-        items[last] = null;
-        size--;
-        this.updateR();
-        return lastitem;
-
     }
 
     public T get(int index) {
-        if (front + 1 + index < length) {
-            return items[front + 1 + index];
-        } else {
-            return items[front + 1 + index - length];
+        if (index >= size) {
+            return null;
         }
+        int i = 0;
+        int j = p1;
+        while (i <= index) {
+            j = ArrayDeque.plusOne(j, length);
+            i++;
+        }
+        return items[j];
     }
 
 
 
-    
+/*
+    public static void main(String[] args) {
+        ArrayDeque<Integer> test = new ArrayDeque<>();
+
+        int j = 0;
+        while (j < 400) {
+            test.addFirst(j);
+            j++;
+        }
+        int i = 0;
+        while (i < 400) {
+            test.removeLast();
+            i++;
+        }
+        int k = 0;
+        while (k < 18) {
+            test.addLast(k);
+            k++;
+        }
+        test.printDeque();
+        System.out.println(test.size());
+        System.out.println(test.get(0));
+        int a = test.removeLast();
+        System.out.println(a);
+    }
+
+ */
+
+
 }
