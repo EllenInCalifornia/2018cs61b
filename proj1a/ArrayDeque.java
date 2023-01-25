@@ -104,15 +104,15 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        int i = 0;
+        int counter = 0;
         int j = front;
-        while (i < size) {
+        while (counter < size) {
             if (j == length -1) {
                 j = -1;
             }
             System.out.print(items[j+1] + " ");
             j++;
-            i++;
+            counter++;
         }
 
     }
