@@ -51,17 +51,16 @@ public class ArrayDeque<T> {
 
     private void memoryManage() {
         T[] smallItems = (T[]) new Object[length / 2];
-        if (front < last ){
+        if (front < last) {
             System.arraycopy(items, front, smallItems,
                     smallItems.length / 4, size);
             items = smallItems;
             length = items.length;
             front = length / 4;
             last = front + size;
-         }
-        else {
+        } else {
             System.arraycopy(items, 0, smallItems,
-                    0, last );
+                    0, last);
             System.arraycopy(items, front + 1, smallItems,
                     front + 1 - length / 2, length - front - 1);
             items = smallItems;
@@ -91,7 +90,7 @@ public class ArrayDeque<T> {
             reSize();
         }
         items[last] = item;
-        if (last == length -1) {
+        if (last == length - 1) {
             last = 0;
         } else {
             last++;
