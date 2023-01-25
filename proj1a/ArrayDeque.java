@@ -23,7 +23,6 @@ public class ArrayDeque<T> {
         R = 0.0;
     }
     private void updateR() {
-        size = this.size;
         R = ((double) size) / length;
         while (length >= 16 && R < 0.25) {
             memoryManage();
@@ -53,11 +52,11 @@ public class ArrayDeque<T> {
         T[] smallItems = (T[]) new Object[length / 2];
         if (front < last) {
             System.arraycopy(items, front, smallItems,
-                    smallItems.length / 4, size);
+                    smallItems.length / 4, size + 1);
             items = smallItems;
             length = items.length;
             front = length / 4;
-            last = front + size;
+            last = front + size + 1;
         } else {
             System.arraycopy(items, 0, smallItems,
                     0, last);
@@ -169,27 +168,21 @@ public class ArrayDeque<T> {
         }
     }
 
-//    public static void main(String[] args) {
-//        ArrayDeque<Integer> Test = new ArrayDeque<>();
-//        Test.addLast(0);
-//        Test.addFirst(1);
-//        Test.size();
-//        Test.addLast(3);
-//        Test.size();
-//        Test.addLast(5);
-//        Test.addFirst(6);
-//        Test.addLast(7);
-//        Test.addFirst(8);
-//        Test.addFirst(9);
-//        Test.addFirst(10);
-//        System.out.println(Test.size);
-//        for (int i = 0; i < 30; i++) {
-//            Test.addFirst(i);
-//        }
-//        for (int j = 0; j < 40; j++) {
-//            Test.removeFirst();
-//        }
-//    }
+    public static void main(String[] args) {
+        ArrayDeque<Integer> Test = new ArrayDeque<>();
+
+        for (int i = 0; i < 30; i++) {
+            Test.addFirst(i);
+        }
+        for (int j = 0; j < 30; j++) {
+            Test.removeFirst();
+        }
+
+        for (int i = 0; i < 30; i++) {
+            Test.addFirst(i);
+        }
+        int i = Test.get(0);
+    }
 
 
 }
