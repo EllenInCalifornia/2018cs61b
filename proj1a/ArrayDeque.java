@@ -22,9 +22,9 @@ public class ArrayDeque<T> {
         length = items.length;
         R = 0.0;
     }
-    private void updateR(){
+    private void updateR() {
         size = this.size;
-        R = ((double)size) / length;
+        R = ((double) size) / length;
         while (length >= 16 && R < 0.25) {
             memoryManage();
         }
@@ -39,8 +39,7 @@ public class ArrayDeque<T> {
             System.arraycopy(items, front + 1, newItems,
                     length + last, length - last);
             front = length + last - 1;
-        }
-        else {
+        } else {
             last = front + 1;
             front = length * 2 - 1;
         }
@@ -64,7 +63,7 @@ public class ArrayDeque<T> {
             System.arraycopy(items, 0, smallItems,
                     0, last );
             System.arraycopy(items, front + 1, smallItems,
-                    front + 1 - length / 2 , length - front - 1);
+                    front + 1 - length / 2, length - front - 1);
             items = smallItems;
             length = items.length;
             front -= length;
@@ -78,10 +77,11 @@ public class ArrayDeque<T> {
             reSize();
         }
         items[front] = i;
-        if (front  == 0 ) {
+        if (front  == 0) {
             front = length - 1;
+        } else {
+            front--;
         }
-        else front--;
         size++;
 
     }
@@ -93,8 +93,9 @@ public class ArrayDeque<T> {
         items[last] = item;
         if (last == length -1) {
             last = 0;
+        } else {
+            last++;
         }
-        else last++;
         size++;
     }
 
@@ -114,10 +115,10 @@ public class ArrayDeque<T> {
         int counter = 0;
         int j = front;
         while (counter < size) {
-            if (j == length -1) {
+            if (j == length - 1) {
                 j = -1;
             }
-            System.out.print(items[j+1] + " ");
+            System.out.print(items[j + 1] + " ");
             j++;
             counter++;
         }
@@ -129,11 +130,10 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (front == length -1) {
+        if (front == length - 1) {
             ans = items[0];
             front = 0;
-        }
-        else{
+        } else {
             ans = items[front + 1];
             front++;
         }
@@ -149,10 +149,9 @@ public class ArrayDeque<T> {
         }
         T lastitem;
         if (last == 0) {
-            lastitem = items[length -1];
+            lastitem = items[length - 1];
             last = length - 1;
-        }
-        else {
+        } else {
             lastitem = items[last - 1];
             last--;
         }
@@ -163,31 +162,35 @@ public class ArrayDeque<T> {
 
     }
 
-
-
     public T get(int index) {
         if (front + 1 + index < length) {
             return items[front + 1 + index];
-        }
-        else {
+        } else {
             return items[front + 1 + index - length];
         }
     }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> Test = new ArrayDeque<>();
-        Test.addLast(0);
-        Test.addFirst(1);
-        Test.size();
-        Test.addLast(3);
-        Test.size();
-        Test.addLast(5);
-        Test.addFirst(6);
-        Test.addLast(7);
-        Test.addFirst(8);
-        Test.addFirst(9);
-        Test.addFirst(10);
-    }
+//    public static void main(String[] args) {
+//        ArrayDeque<Integer> Test = new ArrayDeque<>();
+//        Test.addLast(0);
+//        Test.addFirst(1);
+//        Test.size();
+//        Test.addLast(3);
+//        Test.size();
+//        Test.addLast(5);
+//        Test.addFirst(6);
+//        Test.addLast(7);
+//        Test.addFirst(8);
+//        Test.addFirst(9);
+//        Test.addFirst(10);
+//        System.out.println(Test.size);
+//        for (int i = 0; i < 30; i++) {
+//            Test.addFirst(i);
+//        }
+//        for (int j = 0; j < 40; j++) {
+//            Test.removeFirst();
+//        }
+//    }
 
 
 }
