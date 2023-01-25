@@ -35,9 +35,16 @@ public class ArrayDeque<T> {
         T[] newItems = (T[]) new Object[length * 2];
         System.arraycopy(items, 0, newItems,
                 0, front + 1);
-        System.arraycopy(items, front + 1, newItems,
-                length + last, length - last);
-        front = length + last - 1;
+        if (front + 1 < length) {
+            System.arraycopy(items, front + 1, newItems,
+                    length + last, length - last);
+            front = length + last - 1;
+        }
+        else {
+            last = front + 1;
+            front = length * 2 - 1;
+        }
+
         items = newItems;
         length = items.length;
         this.updateR();
@@ -167,21 +174,20 @@ public class ArrayDeque<T> {
         }
     }
 
-//    public static void main(String[] args) {
-//        ArrayDeque<Integer> Test = new ArrayDeque<>();
-//
-//        for (int i = 0; i < 37; i++) {
-//            Test.addFirst(i);
-//        }
-//        for (int j = 0; j < 30; j++) {
-//            Test.removeFirst();
-//        }
-
-
-
-
-
-  //  }
+    public static void main(String[] args) {
+        ArrayDeque<Integer> Test = new ArrayDeque<>();
+        Test.addLast(0);
+        Test.addFirst(1);
+        Test.size();
+        Test.addLast(3);
+        Test.size();
+        Test.addLast(5);
+        Test.addFirst(6);
+        Test.addLast(7);
+        Test.addFirst(8);
+        Test.addFirst(9);
+        Test.addFirst(10);
+    }
 
 
 }
