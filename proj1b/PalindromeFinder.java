@@ -19,7 +19,6 @@ public class PalindromeFinder {
             String word = in.readString();
             if (word.length() >= minLength && palindrome.isPalindrome(word, ccN)) {
                 System.out.println(word);
-
             }
         }
     }

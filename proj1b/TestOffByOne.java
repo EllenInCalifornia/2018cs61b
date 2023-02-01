@@ -20,9 +20,10 @@ public class TestOffByOne {
         char c = ' ';
         char d = ' ';
         assertFalse(offByOne.equalChars(c, d));
+        char f = 'A';
+        char g = 'b';
+        assertFalse(offByOne.equalChars(f, g));
     }
 
-    /*Uncomment this class once you've created your CharacterComparator interface and OffByOne class.
 
-     */
 }

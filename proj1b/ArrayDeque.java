@@ -161,12 +161,12 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public void printDeque() {
-        int i = 0;
+        int m = 0;
         int j = p1;
-        while (i < size) {
+        while (m < size) {
             j = ArrayDeque.plusOne(j, length);
             System.out.print(items[j] + " ");
-            i++;
+            m++;
         }
     }
 
@@ -175,11 +175,11 @@ public class ArrayDeque<T> implements Deque<T> {
         if (index >= size) {
             return null;
         }
-        int i = 0;
+        int s = 0;
         int j = p1;
-        while (i <= index) {
+        while (s <= index) {
             j = ArrayDeque.plusOne(j, length);
-            i++;
+            s++;
         }
         return items[j];
     }

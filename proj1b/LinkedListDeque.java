@@ -7,7 +7,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         private TNode next;
         private TNode pre;
 
-        public TNode(T i, TNode p, TNode n) {
+        private TNode(T i, TNode p, TNode n) {
             item =  i;
             pre = p;
             next = n;
@@ -17,7 +17,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     public LinkedListDeque() {
         //generic时，sentinel的item怎么设定
         T i = (T) new Object();
-        sentinel = new TNode(i,null, null);
+        sentinel = new TNode(i, null, null);
         sentinel.pre = sentinel;
         sentinel.next = sentinel;
         size = 0;

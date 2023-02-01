@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 public class TestOffByN {
     @Test
     public void testOffByN() {
-        OffByN OffBy5 = new OffByN(5);
-        assertTrue(OffBy5.equalChars('a', 'f'));
-        assertTrue(OffBy5.equalChars('f', 'a'));
-        assertFalse(OffBy5.equalChars('a', 'd'));
+        OffByN offBy5 = new OffByN(5);
+        assertTrue(offBy5.equalChars('a', 'f'));
+        assertTrue(offBy5.equalChars('f', 'a'));
+        assertFalse(offBy5.equalChars('a', 'd'));
 
     }
 

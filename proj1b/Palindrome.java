@@ -3,7 +3,7 @@ public class Palindrome {
      where the characters appear in the same order as in the String. */
     public Deque<Character> wordToDeque(String word) {
         Deque ans = new LinkedListDeque();
-        for(int i = 0; i < word.length(); i++) {
+        for (int i = 0; i < word.length(); i++) {
             ans.addLast(word.charAt(i));
         }
         return ans;
@@ -15,17 +15,17 @@ public class Palindrome {
         if (wordDq.size() == 1 || wordDq.size() == 0) {
             return true;
         }
-        return wordDq.removeFirst() == wordDq.removeLast() &&
-                isPalindrome(wordDq);
+        return wordDq.removeFirst() == wordDq.removeLast()
+                && isPalindrome(wordDq);
     }
 
     private boolean isPalindromeHelper(Deque<Character> wd, CharacterComparator cc) {
-        if (wd.size() == 0 ||wd.size() == 1) {
+        if (wd.size() == 0 || wd.size() == 1) {
             return true;
         }
         char f = wd.removeFirst();
         char l = wd.removeLast();
-        return cc.equalChars(f,l) && isPalindromeHelper(wd, cc);
+        return cc.equalChars(f, l) && isPalindromeHelper(wd, cc);
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {

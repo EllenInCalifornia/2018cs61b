@@ -39,13 +39,13 @@ public class TestPalindrome {
         CharacterComparator cc = new OffByOne();
         assertTrue(palindrome.isPalindrome(a, cc));
         String b = "beautiful";
-        assertFalse(palindrome.isPalindrome(b,cc));
+        assertFalse(palindrome.isPalindrome(b, cc));
         String c = "benda";
-        assertTrue(palindrome.isPalindrome(c,cc));
+        assertTrue(palindrome.isPalindrome(c, cc));
         String d = " ";
-        assertTrue(palindrome.isPalindrome(d,cc));
+        assertTrue(palindrome.isPalindrome(d, cc));
         String e = "a";
-        assertTrue(palindrome.isPalindrome(e,cc));
+        assertTrue(palindrome.isPalindrome(e, cc));
 
     }
 
@@ -57,7 +57,7 @@ public class TestPalindrome {
         String b = "abed";
         assertTrue(palindrome.isPalindrome(b, cc));
         String c = "bccb";
-        assertFalse(palindrome.isPalindrome(c,cc));
+        assertFalse(palindrome.isPalindrome(c, cc));
         String d = " ";
         assertTrue(palindrome.isPalindrome(d, cc));
         String e = "a";
