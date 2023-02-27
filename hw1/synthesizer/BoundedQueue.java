@@ -1,6 +1,5 @@
 package synthesizer;
 import java.util.Iterator;
-import org.junit.Test;
 
 public interface BoundedQueue<T> extends Iterable<T> {
     int capacity();

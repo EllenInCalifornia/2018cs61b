@@ -1,6 +1,5 @@
 package synthesizer;
 
-import java.util.Iterator;
 
 /*
 不明白
@@ -27,10 +26,7 @@ public abstract class AbstractBoundedQueue<T> implements BoundedQueue<T> {
         return capacity;
     }
     @Override
-    public int fillCount(){
+    public int fillCount() {
         return fillCount;
     }
-    public abstract T peek();
-    public abstract T dequeue();
-    public abstract void enqueue(T x);
 }
