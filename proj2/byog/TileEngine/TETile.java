@@ -36,8 +36,7 @@ public class TETile {
      * @param description The description of the tile, shown in the GUI on hovering over the tile.
      * @param filepath Full path to image to be used for this tile. Must be correct size (16x16)
      */
-    public TETile(char character, Color textColor, Color backgroundColor, String description,
-                  String filepath) {
+    public TETile(char character, Color textColor, Color backgroundColor, String description, String filepath) {
         this.character = character;
         this.textColor = textColor;
         this.backgroundColor = backgroundColor;
@@ -70,6 +69,11 @@ public class TETile {
         this(t.character, textColor, t.backgroundColor, t.description, t.filepath);
     }
 
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 
     /**
      * Draws the tile to the screen at location x, y. If a valid filepath is provided,
