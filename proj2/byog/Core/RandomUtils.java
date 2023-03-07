@@ -19,8 +19,21 @@ public class RandomUtils {
      *
      * @return a random real number uniformly in [0, 1)
      */
+    /*
+       Random r = new Random(seed);
+    Creates a new random number generator using a single long seed.
+    每次提供的seed不一样,生成的double不一样，但是同样的seed生成相同的double
+    无论seed如何，random number 总是在0-1之间
+    random.nextDouble(bound: 2); Returns a pseudorandomly chosen double value between zero (inclusive) and the specified bound (exclusive)
+     */
     public static double uniform(Random random) {
         return random.nextDouble();
+    }
+    public static void main(String[] args) {
+        Random r = new Random(2);
+        System.out.println(uniform(r));
+        System.out.println(uniform(r));
+        System.out.println(uniform(r));
     }
 
     /**
@@ -30,12 +43,14 @@ public class RandomUtils {
      * @return a random integer uniformly between 0 (inclusive) and {@code n} (exclusive)
      * @throws IllegalArgumentException if {@code n <= 0}
      */
+
     public static int uniform(Random random, int n) {
         if (n <= 0) {
             throw new IllegalArgumentException("argument must be positive: " + n);
         }
         return random.nextInt(n);
     }
+
 
 
     /**
